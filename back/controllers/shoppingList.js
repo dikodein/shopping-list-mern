@@ -23,6 +23,13 @@ class shoppingListController {
       .catch(err => res.send(err))
   }
 
+  static getItem (req, res) {
+    const itemId = req.params.itemId
+    ShoppingList.findById(itemId)
+      .then(item => res.send(item))
+      .catch(err => res.send(err))
+  }
+
   static updateItem (req, res) {
     const item_id = req.params.itemId
     const user_id = req.user._id

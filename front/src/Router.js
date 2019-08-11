@@ -1,24 +1,31 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 
 // Containers
 import Register from './containers/Register'
 import Login from './containers/Login'
 import Home from './containers/Home'
 
+// Redux
+import { Provider as ReduxProvider }  from "react-redux"
+import configStore from './modules/store'
+const reduxStore = configStore(window.REDUX_INITIAL_DATA)
+
 // Cookies
-import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
 const Router = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <PublicRoute path="/register" component={Register} />
-        <PublicRoute path="/login" component={Login} />
-        <PrivateRoute exact path="/" component={Home} />
-      </Switch>
-    </BrowserRouter>
+    <ReduxProvider store={reduxStore}>
+      <BrowserRouter>
+        <Switch>
+          <PublicRoute path="/register" component={Register} />
+          <PublicRoute path="/login" component={Login} />
+          <PrivateRoute exact path="/" component={Home} />
+        </Switch>
+      </BrowserRouter>
+    </ReduxProvider>
   )
 }
 
